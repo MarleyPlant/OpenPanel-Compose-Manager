@@ -8,7 +8,9 @@
 from flask import Flask, render_template, render_template_string, request
 
 # import what is needed for this plugin
-import subprocess
+import socket
+import struct
+import time
 import os
 import requests
 
@@ -28,6 +30,61 @@ def get_client_ip():
 
     return client_ip
 
+
+
+# no mtr or traceroute availabel in contianer, we will build 
+def simple_traceroute(dest_name, max_hops=30, timeout=1):
+    try:
+        dest_addr = socket.gethostbyname(dest_name)
+    except socket.gaierror:
+        return f"Error: Invalid hostname or IP address '{dest_name}'"
+
+    port = 33434
+    result = []
+
+    for ttl in range(1, max_hops + 1):
+        try:
+            recv_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP)
+            recv_socket.settimeout(timeout)
+            recv_socket.bind(("", port))
+
+            send_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+            send_socket.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
+
+            start_time = time.time()
+            send_socket.sendto(b"", (dest_addr, port))
+
+            try:
+                data, curr_addr = recv_socket.recvfrom(512)
+                end_time = time.time()
+                curr_addr = curr_addr[0]
+
+                try:
+                    curr_name = socket.gethostbyaddr(curr_addr)[0]
+                except socket.error:
+                    curr_name = curr_addr
+
+                elapsed = (end_time - start_time) * 1000  # ms
+                line = f"{ttl}\t{curr_addr}\t{elapsed:.2f} ms"
+            except socket.timeout:
+                line = f"{ttl}\t*\tTimeout"
+
+            send_socket.close()
+            recv_socket.close()
+
+            result.append(line)
+
+            if curr_addr == dest_addr:
+                break
+        except PermissionError:
+            return "Error: Root privileges required to run traceroute."
+        except Exception as e:
+            return f"Error: {str(e)}"
+
+    return "\n".join(result)
+
+
+
 # Route should be same as 'link' in readme.txt
 @app.route('/advanced/traceroute', methods=['GET', 'POST'])
 # remove login_required_route decorator if page should be accessed without login (NOT RECOMMENDED)
@@ -38,14 +95,7 @@ def traceroute():
         target = request.form.get('target')
         if target:
             try:
-                process = subprocess.run(
-                    ['traceroute', '-n', target],
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.STDOUT,
-                    text=True,
-                    timeout=30
-                )
-                result = process.stdout
+                result = simple_traceroute(target)
             except Exception as e:
                 result = f"Error: {str(e)}"
         else:
