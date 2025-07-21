@@ -8,25 +8,4 @@ This is an example plugin for OpenPanel.
 
 ---
 
-To install it:
-
-```
-cd /etc/openpanel/modules
-git clone https://github.com/stefanpejcic/traceroute
-```
-
-Then enable it from **OpenAdmin > Plans > Feature Manager** for desired feature plans.
-
-After OpenPanel service restart, it will immediately be available to users on hositng plan that have that feature set assigned.
-
-
----
-
-## Customization
-
-There are a few rules to follow:
-
-- readme.txt must be present for module to be visible
-- .py file must have same name as the folder
-- category in readme must be one of already defined sections from dashboard page
-- 
+Documentation: https://openpanel.com/docs/articles/dev-experience/custom-plugins#example
