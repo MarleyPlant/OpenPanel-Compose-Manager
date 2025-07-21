@@ -20,25 +20,57 @@ https://dev.openpanel.com/cli/config.html#dev-mode
 ')}}</p>
     </div>
     <div class="mt-2 gap-2 sm:mt-0 sm:flex">
-    {{ _('Your remote IP, to perform a reverse, traceroute is %(client_ip)s. The server IP address is %(server_ip)s.', client_ip=client_ip, server_ip=server_ip) }}
     </div>
 </div>
 <!-- END page header -->
 
 <!-- START page content -->
-    <form method="POST">
-        <!-- all forms need to send 'csrf_token' 
-        https://flask-wtf.readthedocs.io/en/0.15.x/csrf/#html-forms
-        -->
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <input type="text" name="target" placeholder="Enter IP or hostname" required>
-        <button type="submit">Trace</button>
-    </form>
 
-    {% if result %}
-        <h3>Result:</h3>
-        <pre>{{ result }}</pre>
-    {% endif %}
+<div id="collapseAddNewUser">
+
+    <div class="sm:mx-auto sm:max-w-2xl" style="display:block;">
+        <form method="POST" class="mt-8" x-data="{ loading: false }" @submit="loading = true">
+            <!-- all forms need to send 'csrf_token' 
+            https://flask-wtf.readthedocs.io/en/0.15.x/csrf/#html-forms
+            -->
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
+            <div class="grid grid-cols-1 gap-4">
+        
+                <div class="col-span-full sm:col-span-3">
+                    {{ _('Your remote IP, to perform a reverse, traceroute is %(client_ip)s. The server IP address is %(server_ip)s.', client_ip=client_ip, server_ip=server_ip) }}
+                </div>
+        
+                <div class="col-span-full sm:col-span-3">
+                    <label class="text-sm leading-none text-gray-900 dark:text-gray-50 font-medium" for="username">IP address or hostname:</label>
+                    <div class="relative w-full mt-2">
+                        <input
+                            type="text" name="target" placeholder="Enter IP or hostname" required
+                            class="relative block w-full appearance-none rounded-md border px-2.5 py-2 shadow-sm outline-none transition sm:text-sm border-gray-300 dark:border-gray-800 text-gray-900 dark:text-gray-50 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-950" autofocus />
+                        
+                        <button
+                            class="my-3 relative inline-flex items-center justify-center whitespace-nowrap rounded-md border px-3 py-2 text-center text-sm font-medium shadow-sm transition-all duration-100 ease-in-out disabled:pointer-events-none disabled:shadow-none outline outline-offset-2 outline-0 focus-visible:outline-2 outline-blue-500 dark:outline-blue-500 border-transparent text-white dark:text-white bg-blue-500 dark:bg-blue-500 hover:bg-blue-600 dark:hover:bg-blue-600 disabled:bg-blue-300 disabled:text-white disabled:dark:bg-blue-800 disabled:dark:text-blue-400"
+                            type="submit"
+                            :disabled="loading"
+                        >
+                            <template x-if="!loading">
+                                <span>Trace</span>
+                            </template>
+                            <template x-if="loading">
+                                <span>Testing...</span>
+                            </template>
+                        </button>
+                    </div>
+                </div>
+            </div>
+                
+            {% if result %}
+                <pre>{{ result }}</pre>
+            {% endif %}
+        </form>
+
+    </div>
+</div>
 
 <!-- END page content -->
 
