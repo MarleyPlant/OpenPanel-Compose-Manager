@@ -7,4 +7,4 @@ author = Stefan Pejcic
 category = advanced
 icon = bi bi-person
 show_in_search = 1
-help_link = https://example.com/myplugin
+help_link = https://github.com/stefanpejcic/traceroute/
