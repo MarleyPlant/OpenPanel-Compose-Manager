@@ -32,7 +32,7 @@ def get_client_ip():
 
 
 
-# no mtr or traceroute availabel in contianer, we will build 
+# you can not run pip install for additional tools, and since mtr is not available in OpenPanel UI contianer, we need to use vanila python to simulate traceroute output
 def simple_traceroute(dest_name, max_hops=30, timeout=1):
     try:
         dest_addr = socket.gethostbyname(dest_name)
