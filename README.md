@@ -18,3 +18,13 @@ git clone https://github.com/stefanpejcic/traceroute
 Then enable it from **OpenAdmin > Plans > Feature Manager** for desired feature plans.
 
 After OpenPanel service restart, it will immediately be available to users on hositng plan that have that feature set assigned.
+
+
+---
+
+## Customization
+
+There are a few rules to follow:
+
+- readme.txt must be present for module to be visible
+- .py file must have same name as the folder
