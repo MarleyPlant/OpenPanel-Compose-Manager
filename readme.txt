@@ -1,0 +1,10 @@
+name = traceroute
+title = Traceroute
+description = Run traceroute to IP or hostname.
+link = /advanced/traceroute
+version = 1.0.0
+author = Stefan Pejcic
+category = advanced
+icon = bi bi-person
+show_in_search = 1
+help_link = https://example.com/myplugin
