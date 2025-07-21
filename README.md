@@ -28,3 +28,5 @@ There are a few rules to follow:
 
 - readme.txt must be present for module to be visible
 - .py file must have same name as the folder
+- category in readme must be one of already defined sections from dashboard page
+- 
