@@ -42,10 +42,10 @@ https://dev.openpanel.com/cli/config.html#dev-mode
                 </div>
         
                 <div class="col-span-full sm:col-span-3">
-                    <label class="text-sm leading-none text-gray-900 dark:text-gray-50 font-medium" for="username">IP address or hostname:</label>
+                    <label class="text-sm leading-none text-gray-900 dark:text-gray-50 font-medium" for="target">{{_('IP address or hostname')}}:</label>
                     <div class="relative w-full mt-2">
                         <input
-                            type="text" name="target" placeholder="Enter IP or hostname" required
+                            type="text" name="target" placeholder="{{_('IP address or hostname')}}" required
                             class="relative block w-full appearance-none rounded-md border px-2.5 py-2 shadow-sm outline-none transition sm:text-sm border-gray-300 dark:border-gray-800 text-gray-900 dark:text-gray-50 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-950" autofocus />
                         
                         <button
@@ -54,10 +54,10 @@ https://dev.openpanel.com/cli/config.html#dev-mode
                             :disabled="loading"
                         >
                             <template x-if="!loading">
-                                <span>Trace</span>
+                                <span>{{_('Trace')}}</span>
                             </template>
                             <template x-if="loading">
-                                <span>Testing...</span>
+                                <span>{{_('Loading...')}}</span>
                             </template>
                         </button>
                     </div>
