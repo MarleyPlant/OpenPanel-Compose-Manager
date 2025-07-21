@@ -1,0 +1,45 @@
+<!-- traceroute.html -->
+
+<!-- 
+HTML comments are visible only when dev_mode is enabled
+https://dev.openpanel.com/cli/config.html#dev-mode
+-->
+
+
+<!-- remove this extends line if you do NOT want the page to have OpenPanel UI header, sidebar, footer.. -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- START page header -->
+<div class="border-b flex flex-col border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-950 p-4 sm:p-6 lg:p-8 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+        <div class="flex items-center gap-x-3"><h1 class="text-lg font-semibold text-gray-900 dark:text-gray-50">{{_('Traceroute')}}</h1></div>
+        
+        <p class="text-sm text-gray-500 dark:text-gray-500">{{_('Trace network traffic from the server to diagnose network congestion.
+')}}</p>
+    </div>
+    <div class="mt-2 gap-2 sm:mt-0 sm:flex">
+    {{ _('Your remote IP, to perform a reverse, traceroute is %(client_ip)s. The server IP address is %(server_ip)s.', client_ip=client_ip, server_ip=server_ip) }}
+    </div>
+</div>
+<!-- END page header -->
+
+<!-- START page content -->
+    <form method="POST">
+        <!-- all forms need to send 'csrf_token' 
+        https://flask-wtf.readthedocs.io/en/0.15.x/csrf/#html-forms
+        -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" name="target" placeholder="Enter IP or hostname" required>
+        <button type="submit">Trace</button>
+    </form>
+
+    {% if result %}
+        <h3>Result:</h3>
+        <pre>{{ result }}</pre>
+    {% endif %}
+
+<!-- END page content -->
+
+{% endblock %}
