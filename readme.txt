@@ -1,5 +1,5 @@
-name = traceroute
-title = Traceroute
+name = ComposeManager
+title = ComposeManager
 description = Run traceroute to IP or hostname.
 link = /advanced/traceroute
 version = 1.0.0
