@@ -1,0 +1,72 @@
+{
+  "name": "OpenPanel Docker Composer Manager",
+  "version": "0.0.1",
+  "build": "0",
+  "description": "Manage stacks of docker containers and connect them to domains in your OpenPanel",
+  "syncConfig": true,
+  "gitPath": "",
+  "sections": [
+    "Shields",
+    "Brands",
+    "License",
+    "RelatedProjects",
+    "Development",
+    "Custom"
+  ],
+  "sectionconfig": {
+    "Development": {
+      "data": {
+        "depscmd": " cd /etc/openpanel/modules/ && git clone https://github.com/stefanpejcic/dns-visualizer && \\"
+      },
+      "order": 1
+    },
+    "Shields": {
+      "order": 0
+    },
+    "Custom": {
+      "data": {},
+      "order": 2
+    },
+    "Contributors": {
+      "theme": "default",
+      "order": 3
+    },
+    "Brands": {
+      "data": [
+        "nginx",
+        "yaml",
+        "docker",
+        "python",
+        "html5"
+      ],
+      "order": 4
+    },
+    "License": {
+      "data": {
+        "name": "The Unlicense",
+        "spdx_id": "Unlicense",
+        "url": "https://api.github.com/licenses/unlicense",
+        "description": "A license with no conditions whatsoever which dedicates works to the public domain. Unlicensed works, modifications, and larger works may be distributed under different terms and without source code.",
+        "file": "Unlicense.txt"
+      },
+      "order": 6
+    },
+    "RelatedProjects": {
+      "data": [
+        {
+          "name": "Flask",
+          "homepage": "https://flask.palletsprojects.com/en/stable/"
+        },
+        {
+          "name": "OpenPanel",
+          "homepage": "https://github.com/stefanpejcic"
+        }
+      ],
+      "order": 5
+    },
+    "Env": {
+      "theme": "default",
+      "order": 7
+    }
+  }
+}
