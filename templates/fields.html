@@ -1,0 +1,68 @@
+{% macro selectField(name, options, selectedOption, unique) -%}
+  <div class="flex flex-col w-full h-full">
+    <label for="{{ name }}" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">{{ name }}</label>
+
+    <select name="{{ unique.service }}_{{ unique.value|escape|replace('/', '_') }}" id="{{ name }}" class="flex py-2 mt-1 w-full h-full rounded-md border-0 px-2 bg-gray-50 dark:bg-gray-800 py-1.5 text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" value="{{ selectedOption }}">
+      {% for value in options %}
+        {% if value.container_name == selectedOption %}
+          <option value="{{ value.container_name }}">{{ value.container_name }}</option>
+        {% elif value.value %}
+          <option value="{{ value.value }}">{{ options.value }}</option>
+        {% elif value.container_name %}
+          <option value="{{ value.container_name }}" selected>{{ value.container_name }}</option>
+        {% elif value.domain_url %}
+          <option value="{{ value }}">{{ value.domain_url }}</option>
+        {% else %}
+          <option value="{{ value.value }}" selected>{{ value.value }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+{%- endmacro %}
+
+{% macro envField(key, value) %}
+  <div class="flex items-center justify-between py-2">
+    <input type="text" name="env_key" id="env_key" class="block w-1/2 rounded-md border-0 px-2 bg-gray-50 dark:bg-gray-800 py-1.5 text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" value="{{ key }}" />
+    <span class="mx-2 text-gray-500 dark:text-gray-400">=</span>
+    <input type="text" name="env_value" id="env_value" class="block w-1/2 rounded-md border-0 px-2 bg-gray-50 dark:bg-gray-800 py-1.5 text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus :ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" value="{{ value }}" />
+  </div>
+{% endmacro %}
+
+{% macro fieldGroup(label, name, repeater) %}
+  <div class="flex p-2 w-full flex-col border-t border-gray-900/10 dark:border-gray-800 gap-4 pt-4">
+    <div class="flex items-center justify-between">
+      <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-gray-50">{{ label }}</h3>
+      <span class="text-sm text-gray-500 dark:text-gray-400">You can add multiple {{ label|lower }}.</span>
+    </div>
+    <div class="flex flex-col w-full p-4 gap-4 bg-gray-50 dark:bg-gray-800 rounded-md">
+      {{ caller() }}
+      {% if repeater %}
+        <button type="button" class="mt-4 text-center justify-center inline-flex items-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-50 shadow-sm hover:bg-gray-300 dark:hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400">Add Item</button>
+      {% endif %}
+    </div>
+  </div>
+{%- endmacro %}
+
+{% macro fieldText(label, name, value) %}
+  <div class="flex flex-col w-full">
+    <label for="{{ name }}" class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">{{ label }}</label>
+    <div class="mt-1">
+      <input type="text" name="{{ name }}" id="{{ name }}" class="block w-full rounded-md border-0 px-2 bg-gray-50 dark:bg-gray-800 py-1.5 text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" value="{{ value }}" />
+    </div>
+  </div>
+{%- endmacro %}
+
+{% macro serviceLI(service) -%}
+  <li class="flex items-center justify-between gap-x-6 py-3">
+    <div class="flex min-w-0 gap-x-4">
+      <div class="min-w-0 flex-auto">
+        <p class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-50">{{ service.container_name }}</p>
+      </div>
+    </div>
+    <div class="flex shrink-0 items-center gap-x-4">
+      <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset bg-green-50 text-green-700 ring-green-600/20">running</span>
+      <a href="#" class="text-sm text-blue-600 hover:underline dark:text-blue-500">Logs</a>
+      <a href="#" class="text-sm text-blue-600 hover:underline dark:text-blue-500">Edit</a>
+    </div>
+  </li>
+{%- endmacro %}

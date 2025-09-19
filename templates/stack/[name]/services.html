@@ -1,0 +1,40 @@
+<!-- traceroute.html -->
+
+<!--         
+HTML comments are visible only when dev_mode is enabled
+https://dev.openpanel.com/cli/config.html#dev-mode
+        -->
+
+<!-- remove this extends line if you do NOT want the page to have OpenPanel UI header, sidebar, footer.. -->
+{% extends 'base.html' %}
+{% from 'fields.html' import fieldText, fieldGroup %}
+{% from 'tables.html' import table %}
+
+{% block content %}
+  <!-- START page header -->
+  <div class="border-b flex flex-col border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-950 p-4 sm:p-6 lg:p-8 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <div class="flex items-center gap-x-3">
+        <a href="{{ url_for('ptkcomposemanager.compose_manager') }}" class="text-lg font-semibold text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-50">Docker Compose</a>
+        <span class="text-gray-400 dark:text-gray-500">/</span>
+        <a href="{{ url_for('ptkcomposerstack.stack_detail', stack_name=stack.name) }}" class="text-lg text-gray-400 dark:text-gray-500">{{ stack.label }}</a>
+        <span class="text-gray-400 dark:text-gray-500">/</span>
+        <h1 class="text-lg font-semibold text-gray-900 dark:text-gray-50">Services</h1>
+      </div>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">Modify the Compose file, manage environment variables, and control your stack.</p>
+    </div>
+    <div class="mt-4 flex gap-3 sm:mt-0 sm:flex-shrink-0 sm:items-center"></div>
+  </div>
+  <!-- END page header -->
+
+  <!-- START page content -->
+
+  <div id="collapseAddNewUser" class="p-6">
+    <div class="" style="display:block;">
+    
+      
+      </div>
+
+    <!-- END page content -->
+  </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+services:
+  traceroute:
+    image: nicolaka/netshoot
+    container_name: traceroute
+    command: ["traceroute", "8.8.8.8"]
+    ports:
+      - "3009:3009"
+    environment:
+      - TZ=Europe/Belgrade 
+    networks:
+      - webnet
+
+  web:
+    image: nginx:latest
+    container_name: web
+    ports:
+      - "8080:80"
+    volumes:
+      - datavolume:/usr/share/nginx/html
+    environment:
+      - TZ=Europe/Belgrade
+    depends_on:
+      - traceroute
+    restart: unless-stopped
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
+volumes:
+  datavolume:

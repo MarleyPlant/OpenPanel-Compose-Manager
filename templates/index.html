@@ -1,0 +1,61 @@
+<!-- traceroute.html -->
+
+<!-- 
+HTML comments are visible only when dev_mode is enabled
+https://dev.openpanel.com/cli/config.html#dev-mode
+-->
+
+
+<!-- remove this extends line if you do NOT want the page to have OpenPanel UI header, sidebar, footer.. -->
+{% extends 'ptkbase.html' %}
+{% from 'fields.html' import fieldText, fieldGroup, serviceLI %}
+{% from 'tables.html' import table %}
+
+
+
+
+{% block headeractions %}
+ <div class="font-bold">
+        <span>2</span>
+        <span>/</span>
+        <span>100</span>
+      </div>
+
+<span class="">{{ _('Stacks Used') }}</span>
+{% endblock %}
+
+{% block headertitle %}
+
+{% endblock headertitle %}
+
+
+
+{% block pagecontent %}
+
+
+<div id="collapseAddNewUser" class="p-6">
+
+    <div class="dark:bg-gray-900 p-6 gap-4 flex flex-col">
+        <div class="" style="display:block;">
+      {{ table('stack', stacks, 
+        [
+        { 'label': 'Containers', 'key': 'services', 'transformer': 'length' },
+          { 'label': 'Name', 'key': 'label' }, 
+          { 'label': 'description', 'key': 'description' }, 
+          { 'label': 'Container Prefix', 'key': 'name' },
+          { 'label': 'Ports', 'key': 'ports' }, 
+
+        ], 
+        [
+                    {    'icon': 'bi bi-eye text-gray-500 dark:text-gray-400', 'url': 'stack/__name__' },
+                   {    'icon': 'bi bi-pencil text-gray-500 dark:text-gray-400', 'url': 'stack/__name__/edit' },
+
+          ]
+      ) }}
+      
+      </div>
+    </div>
+
+    <!-- END page content -->
+
+    {% endblock %}

@@ -1,0 +1,125 @@
+name: kimai
+container_prefix: false
+label: Kimai for 
+description: Run fwawgwagwa commands from your browser.
+containers:
+  - nginx
+  - backup
+  - kimai
+
+commands:
+  - name: cache:clear
+    label: Clear the cache
+    run: /opt/kimai/bin/console cache:clear
+    container: nginx
+    args: []
+
+  - name: kimai:reload
+    label: Reload Kimai caches
+    run: /opt/kimai/bin/console kimai:reload
+    container: nginx
+    args: []
+
+  - name: kimai:timesheet:stop-all
+    label: Stop all running timesheets
+    run: /opt/kimai/bin/console kimai:timesheet:stop-all
+    container: nginx
+    args: []
+
+  - name: kimai:user:activate
+    label: Activate a user
+    run: /opt/kimai/bin/console kimai:user:activate ${username}
+    container: nginx
+    args:
+      - name: username
+        label: Username
+        type: string
+        required: true
+
+  - name: kimai:user:create
+    label: Create a new user
+    run: /opt/kimai/bin/console kimai:user:create ${username} ${email} ${role} ${password}
+    container: nginx
+
+    args:
+      - name: username
+        label: Username
+        type: string
+        required: true
+      - name: email
+        label: Email
+        type: string
+        required: true
+      - name: role
+        label: Role
+        type: string
+        required: false
+      - name: password
+        label: Password
+        type: string
+        required: false
+
+  - name: kimai:user:deactivate
+    label: Deactivate a user
+    run: /opt/kimai/bin/console kimai:user:deactivate ${username}
+    container: nginx
+
+    args:
+      - name: username
+        label: Username
+        type: string
+        required: true
+
+  - name: kimai:user:demote
+    label: Demote a user by removing a role
+    run: /opt/kimai/bin/console kimai:user:demote ${username} ${role}
+    container: nginx
+    args:
+      - name: username
+        label: Username
+        type: string
+        required: true
+      - name: role
+        label: Role
+        type: string
+        required: false
+
+  - name: kimai:user:password
+    label: Change the password of a user
+    run: /opt/kimai/bin/console kimai:user:password ${username} ${password}
+    container: nginx
+    args:
+      - name: username
+        label: Username
+        type: string
+        required: true
+      - name: password
+        label: Password
+        type: string
+        required: false
+
+  - name: kimai:user:promote
+    label: Promote a user by adding a role
+    run: /opt/kimai/bin/console kimai:user:promote ${username} ${role}
+    container: nginx
+    args:
+      - name: username
+        label: Username
+        type: string
+        required: true
+      - name: role
+        label: Role
+        type: string
+        required: false
+
+  - name: kimai:invoice:create
+    label: Create invoices
+    run: /opt/kimai/bin/console kimai:invoice:create
+    container: nginx
+    args: []
+
+  - name: kimai:plugins
+    label: Manage Kimai plugins
+    run: /opt/kimai/bin/console kimai:plugins
+    container: nginx
+    args: []

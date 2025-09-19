@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{# Override the navigation block to add Docker Compose link #}
+{% block navigation %}
+{{ super() }}
+<script>
+// Add Docker Compose navigation item after page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Find the Docker navigation group
+    const dockerGroup = document.querySelector('a[href="/containers"]');
+    if (dockerGroup && dockerGroup.closest('ul')) {
+        const dockerList = dockerGroup.closest('ul');
+        
+        // Create the Docker Compose navigation item
+        const composeItem = document.createElement('li');
+        composeItem.innerHTML = `
+            <a href="/containers/compose" class="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 ${window.location.pathname.startsWith('/containers/compose') ? 'bg-gray-50 dark:bg-gray-900 text-blue-600 dark:text-blue-400' : ''}">
+                <i class="bi bi-layers-fill"></i>
+                <span>Docker Compose</span>
+            </a>
+        `;
+        
+        // Insert after the Containers item
+        const containersItem = dockerGroup.closest('li');
+        containersItem.parentNode.insertBefore(composeItem, containersItem.nextSibling);
+    }
+});
+</script>
+{% endblock %}

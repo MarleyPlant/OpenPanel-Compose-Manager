@@ -1,0 +1,206 @@
+{% macro tablenav() -%}
+  <div class="px-6 py-2 flex items-center justify-between">
+    <div></div>
+    <div class="hidden text-sm tabular-nums text-gray-500">0 of 0 row(s) selected.</div>
+    <div class="flex items-center gap-x-6 lg:gap-x-8">
+      <p class="text-sm tabular-nums text-gray-500 sm:block">
+        Showing <span class="font-medium text-gray-900 dark:text-gray-50" x-text="count">0</span> of <span class="font-medium text-gray-900 dark:text-gray-50">0</span>
+      </p>
+      <div class="hidden flex items-center gap-x-1.5">
+        <button class="relative items-center justify-center whitespace-nowrap rounded-md border text-center text-sm font-medium shadow-sm transition-all duration-100 ease-in-out disabled:pointer-events-none disabled:shadow-none outline outline-offset-2 outline-0 focus-visible:outline-2 outline-indigo-500 dark:outline-indigo-500 border-gray-300 dark:border-gray-800 text-gray-900 dark:text-gray-50 bg-white dark:bg-gray-950 hover:bg-gray-50 dark:hover:bg-gray-900/60 disabled:text-gray-400 disabled:dark:text-gray-600 sm:block p-1.5" disabled="">
+          <span class="sr-only">First page</span><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" class="remixicon size-4 shrink-0">
+            <path d="M4.83582 12L11.0429 18.2071L12.4571 16.7929L7.66424 12L12.4571 7.20712L11.0429 5.79291L4.83582 12ZM10.4857 12L16.6928 18.2071L18.107 16.7929L13.3141 12L18.107 7.20712L16.6928 5.79291L10.4857 12Z"></path>
+          </svg>
+        </button><button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md border text-center text-sm font-medium shadow-sm transition-all duration-100 ease-in-out disabled:pointer-events-none disabled:shadow-none outline outline-offset-2 outline-0 focus-visible:outline-2 outline-indigo-500 dark:outline-indigo-500 border-gray-300 dark:border-gray-800 text-gray-900 dark:text-gray-50 bg-white dark:bg-gray-950 hover:bg-gray-50 dark:hover:bg-gray-900/60 disabled:text-gray-400 disabled:dark:text-gray-600 p-1.5" disabled="">
+          <span class="sr-only">Previous page</span><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" class="remixicon size-4 shrink-0">
+            <path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path>
+          </svg>
+        </button><button class="relative inline-flex items-center justify-center whitespace-nowrap rounded-md border text-center text-sm font-medium shadow-sm transition-all duration-100 ease-in-out disabled:pointer-events-none disabled:shadow-none outline outline-offset-2 outline-0 focus-visible:outline-2 outline-indigo-500 dark:outline-indigo-500 border-gray-300 dark:border-gray-800 text-gray-900 dark:text-gray-50 bg-white dark:bg-gray-950 hover:bg-gray-50 dark:hover:bg-gray-900/60 disabled:text-gray-400 disabled:dark:text-gray-600 p-1.5">
+          <span class="sr-only">Next page</span><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" class="remixicon size-4 shrink-0">
+            <path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path>
+          </svg>
+        </button><button class="relative items-center justify-center whitespace-nowrap rounded-md border text-center text-sm font-medium shadow-sm transition-all duration-100 ease-in-out disabled:pointer-events-none disabled:shadow-none outline outline-offset-2 outline-0 focus-visible:outline-2 outline-indigo-500 dark:outline-indigo-500 border-gray-300 dark:border-gray-800 text-gray-900 dark:text-gray-50 bg-white dark:bg-gray-950 hover:bg-gray-50 dark:hover:bg-gray-900/60 disabled:text-gray-400 disabled:dark:text-gray-600 sm:block p-1.5">
+          <span class="sr-only">Last page</span><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" class="remixicon size-4 shrink-0">
+            <path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+{%- endmacro %}
+
+{% macro tableRow(service, actions, headings) -%}
+  <tr class="[&amp;_td:last-child]:pr-4 [&amp;_th:last-child]:pr-4 [&amp;_td:first-child]:pl-4 [&amp;_th:first-child]:pl-4 group select-none hover:bg-gray-50 hover:dark:bg-gray-900">
+    <td class="hidden p-4 text-sm relative whitespace-nowrap py-1 text-gray-600 first:w-10 dark:text-gray-400"></td>
+
+    {% for heading in headings %}
+      <td class="p-4 text-sm relative whitespace-nowrap py-1 text-gray-600 first:w-10 dark:text-gray-400 text-left select-text">
+
+        {% if heading.transformer == 'length' %}
+          {{ heading|length }}
+        {% else %}
+          {{ service[heading.key] }}
+        {% endif %}
+      </td>
+    {% endfor %}
+
+    <td class="flex p-4 text-sm relative whitespace-nowrap py-1 text-gray-600 first:w-10 dark:text-white text-right gap-4 justify-end">
+      {% for action in actions %}
+        {% set processed_url = action.url %}
+        {# Process template variables in URL #}
+        {% set processed_url = processed_url.replace('__value__', service.get('container_name', service.get('name', 'unknown'))) %}
+        {% set processed_url = processed_url.replace('__name__', service.get('name', service.get('container_name', 'unknown'))) %}
+        {% set processed_url = processed_url.replace('__id__', service.get('id', service.get('container_name', 'unknown'))) %}
+        {% set processed_url = processed_url.replace('__key__', service.get('key', service.get('container_name', 'unknown'))) %}
+
+        <a href="{{ processed_url }}" class="btn btn-outline-warning cursor-pointer"><i class="{{ action.icon }}"></i></a>
+      {% endfor %}
+    </td>
+  </tr>
+{%- endmacro %}
+
+{% macro table(name, items, headings, actions) -%}
+  <div class="flex px-2 pt-3 flex-wrap items-center justify-between gap-2 sm:gap-x-6 border-t border-gray-200 dark:border-gray-800">
+    <div class="flex w-full flex-col gap-2 sm:w-fit sm:flex-row sm:items-center">
+      <div class="relative w-full sm:max-w-[250px] sm:[&amp;>input]:h-[30px]">
+        <input x-model="searchQuery" class="relative block w-full appearance-none rounded-md border px-2.5 py-2 shadow-sm outline-none transition sm:text-sm border-gray-300 dark:border-gray-800 text-gray-900 dark:text-gray-50 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-950 disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-400 disabled:dark:border-gray-700 disabled:dark:bg-gray-800 disabled:dark:text-gray-500 file:-my-2 file:-ml-2.5 file:cursor-pointer file:rounded-l-[5px] file:rounded-r-none file:border-0 file:px-3 file:py-2 file:outline-none focus:outline-none disabled:pointer-events-none file:disabled:pointer-events-none file:border-solid file:border-gray-300 file:bg-gray-50 file:text-gray-500 file:hover:bg-gray-100 file:dark:border-gray-800 file:dark:bg-gray-950 file:hover:dark:bg-gray-900/20 file:disabled:bg-gray-100 file:disabled:text-gray-500 file:disabled:dark:bg-gray-800 focus:ring-2 focus:ring-blue-200 focus:dark:ring-blue-700/30 focus:border-blue-500 focus:dark:border-blue-700 [&amp;::-webkit-search-cancel-button]:hidden [&amp;::-webkit-search-decoration]:hidden pl-8" placeholder="Search services..." type="search" />
+        <div class="pointer-events-none absolute bottom-0 left-2 flex h-full items-center justify-center text-gray-400 dark:text-gray-600">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" class="remixicon size-[1.125rem] shrink-0">
+            <path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="relative">
+        <button id="dropdownToggleButton" data-dropdown-toggle="dropdownToggle" class="flex w-full items-center gap-x-1.5 whitespace-nowrap rounded-md border border-gray-300 px-2 py-1.5 font-medium text-gray-600 hover:bg-gray-50 sm:w-fit sm:text-xs dark:border-gray-700 dark:text-gray-400 hover:dark:bg-gray-900 border-dashed outline outline-offset-2 outline-0 focus-visible:outline-2 outline-indigo-500 dark:outline-indigo-500 cursor-pointer" type="button">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" class="remixicon size-4">
+            <path d="M5 7C5 6.17157 5.67157 5.5 6.5 5.5C7.32843 5.5 8 6.17157 8 7C8 7.82843 7.32843 8.5 6.5 8.5C5.67157 8.5 5 7.82843 5 7ZM6.5 3.5C4.567 3.5 3 5.067 3 7C3 8.933 4.567 10.5 6.5 10.5C8.433 10.5 10 8.933 10 7C10 5.067 8.433 3.5 6.5 3.5ZM12 8H20V6H12V8ZM16 17C16 16.1716 16.6716 15.5 17.5 15.5C18.3284 15.5 19 16.1716 19 17C19 17.8284 18.3284 18.5 17.5 18.5C16.6716 18.5 16 17.8284 16 17ZM17.5 13.5C15.567 13.5 14 15.067 14 17C14 18.933 15.567 20.5 17.5 20.5C19.433 20.5 21 18.933 21 17C21 15.067 19.433 13.5 17.5 13.5ZM4 16V18H12V16H4Z"></path>
+          </svg>Show Columns
+        </button><div id="dropdownToggle" class="z-10 text-sm shadow-md border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-gray-50 bg-gray-50 dark:bg-gray-950 divide-y divide-gray-100 rounded-lg shadow-sm w-64 dark:divide-gray-600 hidden" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(564px, 242px);" data-popper-placement="bottom">
+          <ul class="p-2 space-y-1" aria-labelledby="dropdownToggleButton">
+            <li>
+              <div class="flex py-1 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
+                <label class="inline-flex items-center w-full cursor-pointer">
+                  <input type="checkbox" x-model="columns.service" x-on:change="saveColumns" class="sr-only peer" />
+                  <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:translate-x-[-100%] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div><span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Service</span>
+                </label>
+              </div>
+            </li>
+            <li>
+              <div class="flex py-1 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
+                <label class="inline-flex items-center w-full cursor-pointer">
+                  <input type="checkbox" x-model="columns.link" x-on:change="saveColumns" class="sr-only peer" />
+                  <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:translate-x-[-100%] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div><span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Link</span>
+                </label>
+              </div>
+            </li>
+            <li>
+              <div class="flex py-1 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
+                <label class="inline-flex items-center w-full cursor-pointer">
+                  <input type="checkbox" x-model="columns.type" x-on:change="saveColumns" class="sr-only peer" />
+                  <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:translate-x-[-100%] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div><span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Type</span>
+                </label>
+              </div>
+            </li>
+            <li>
+              <div class="flex py-1 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
+                <label class="inline-flex items-center w-full cursor-pointer">
+                  <input type="checkbox" x-model="columns.status" x-on:change="saveColumns" class="sr-only peer" />
+                  <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:translate-x-[-100%] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div><span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Status</span>
+                </label>
+              </div>
+            </li>
+            <li>
+              <div class="flex py-1 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
+                <label class="inline-flex items-center w-full cursor-pointer">
+                  <input type="checkbox" x-model="columns.php" x-on:change="saveColumns" class="sr-only peer" />
+                  <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:translate-x-[-100%] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div><span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">PHP Version</span>
+                </label>
+              </div>
+            </li>
+            <li>
+              <div class="flex py-1 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
+                <label class="inline-flex items-center w-full cursor-pointer">
+                  <input type="checkbox" x-model="columns.site_count" x-on:change="saveColumns" class="sr-only peer" />
+                  <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:translate-x-[-100%] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div><span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Websites</span>
+                </label>
+              </div>
+            </li>
+            <li>
+              <div class="flex py-1 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-600">
+                <label class="inline-flex items-center w-full cursor-pointer">
+                  <input type="checkbox" x-model="columns.actions" x-on:change="saveColumns" class="sr-only peer" />
+                  <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:translate-x-[-100%] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div><span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Actions</span>
+                </label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="/services/new" class="relative inline-flex items-center justify-center rounded-md border px-3 py-2 text-center text-sm font-medium shadow-sm transition-all duration-100 ease-in-out disabled:pointer-events-none disabled:shadow-none outline outline-offset-2 outline-0 focus-visible:outline-2 outline-blue-500 dark:outline-blue-500 dark:border-gray-800 dark:text-gray-50 dark:bg-gray-950 dark:hover:bg-gray-900/60 disabled:text-gray-400 disabled:dark:text-gray-600 sm:w-fit mt-2 w-full sm:w-auto gap-x-1.5 whitespace-nowrap border-black bg-black text-white hover:bg-gray-800 sm:mt-0" id="login_button">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" class="remixicon -ml-1 size-5 shrink-0">
+          <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path>
+        </svg>New {{ name }}
+      </a>
+    </div>
+  </div>
+  <div class="space-y-3">
+    <div class="relative">
+      <table class="w-full overflow-auto whitespace-nowrap border-t border-gray-200 dark:border-gray-800">
+        <thead class="">
+          <tr class="bg-gray-50 dark:bg-gray-900 sm:[&amp;_td:last-child]:pr-6 sm:[&amp;_th:last-child]:pr-6 sm:[&amp;_td:first-child]:pl-6 sm:[&amp;_th:first-child]:pl-6">
+            <th x-show="columns.service" scope="col" class="whitespace-nowrap border-b px-4 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800">Service</th>
+            <th x-show="columns.link" scope="col" class="whitespace-nowrap border-b px-4 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800" style="display: none;">Link</th>
+            <th x-show="columns.type" scope="col" class="whitespace-nowrap border-b px-4 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800" style="display: none;">Type</th>
+            <th x-show="columns.status" scope="col" class="desktop-only whitespace-nowrap border-b px-4 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800">Status</th>
+            <th x-show="columns.php" scope="col" class="desktop-only whitespace-nowrap border-b px-4 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800">PHP Version</th>
+            <th x-show="columns.site_count" scope="col" class="desktop-only whitespace-nowrap border-b px-4 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800" style="display: none;">Websites</th>
+            <th x-show="columns.actions" scope="col" class="whitespace-nowrap border-b px-4 py-3.5 text-sm text-end font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800">Actions</th>
+          </tr>
+        </thead>
+        <tbody x-ref="tbody" class="divide-y divide-gray-200 dark:divide-gray-800"></tbody>
+      </table>
+      <div class="fixed inset-x-0 bottom-8 mx-auto flex w-fit items-center"></div>
+    </div>
+
+    {{ tablenav() }}
+  </div>
+
+  <div class="relative">
+    <table class="w-full caption-bottom border-b border-gray-200 dark:border-gray-800" id="exiting_users">
+      {{ tableHead(headings) }}
+      <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+        {% for service in items %}
+          {{ tableRow(service, actions, headings) }}
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="fixed inset-x-0 bottom-8 mx-auto flex w-fit items-center"></div>
+  </div>
+{%- endmacro %}
+
+{%- macro tableHead(headings) %}
+  <thead class="">
+    <tr class="[&amp;_td:last-child]:pr-4 [&amp;_th:last-child]:pr-4 [&amp;_td:first-child]:pl-4 [&amp;_th:first-child]:pl-4 border-y border-gray-200 dark:border-gray-800">
+      <th class="hidden border-b px-4 text-left font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800 whitespace-nowrap py-1 text-sm sm:text-xs"></th>
+
+      {% for heading in headings %}
+        <th class="border-b px-4 font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800 whitespace-nowrap py-1 text-sm sm:text-xs text-left">
+          <div class="-mx-2 inline-flex cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1 hover:bg-gray-50 hover:dark:bg-gray-900">
+            <span>{{ heading.label }}</span>
+            <div class="-space-y-2">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" class="remixicon size-3.5 text-gray-900 dark:text-gray-50 opacity-30">
+                <path d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"></path>
+              </svg>
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" aria-hidden="true" class="remixicon size-3.5 text-gray-900 dark:text-gray-50">
+                <path d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z"></path>
+              </svg>
+            </div>
+          </div>
+        </th>
+      {% endfor %}
+      <th class="border-b px-4 font-semibold text-gray-900 dark:text-gray-50 border-gray-200 dark:border-gray-800 whitespace-nowrap py-1 text-sm sm:text-xs text-right">Actions</th>
+    </tr>
+  </thead>
+{% endmacro -%}

@@ -1,10 +1,11 @@
-name = ComposeManager
-title = ComposeManager
-description = Run traceroute to IP or hostname.
-link = /advanced/traceroute
+name = composer-manager
+title = Docker Compose Manager
+description = Manage Docker Compose stacks with an intuitive web interface.
+link = /domains/compose
 version = 1.0.0
 author = Stefan Pejcic
-category = advanced
-icon = bi bi-person
+category = domains
+icon = bi bi-layers-fill
 show_in_search = 1
+show_in_sidebar = 1
 help_link = https://github.com/stefanpejcic/traceroute/
